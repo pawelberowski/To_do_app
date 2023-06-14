@@ -1,4 +1,4 @@
-const taskName = document.querySelector('#task-name');
+const taskNameInput = document.querySelector('#task-name');
 const addTaskButton = document.querySelector('#add-task-button');
 const toDo = document.querySelector('#to-do')
 const doing = document.querySelector('#doing')
@@ -67,22 +67,24 @@ function addEventListenersToTask(task) {
     }
 }
 
-if (taskName && addTaskButton) {
+if (taskNameInput && addTaskButton) {
     addTaskButton.addEventListener('click', function(){
+        if (!taskNameInput.value) {
+            return;
+        }
         const newTask = document.createElement('div');
         const newTaskName = document.createElement('h3');
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('delete-button');
         const moveRightButton = document.createElement('button');
         moveRightButton.classList.add('move-right-button');
-
         newTask.append(newTaskName, deleteButton, moveRightButton);
-        newTaskName.innerText = taskName.value;
+        newTaskName.innerText = taskNameInput.value;
         deleteButton.innerText = 'Delete';
         moveRightButton.innerText = '->';
-        
+
         toDo.append(newTask);
         addEventListenersToTask(newTask);
-        taskName.value = '';
+        taskNameInput.value = '';
     })
 }
