@@ -19,7 +19,11 @@ function addEventListenersToTask(task) {
         if (toDo.contains(task)) {
             clonedMoveRightButton.addEventListener('click', function() {
                 const clonedTask = task.cloneNode(true);
-
+                const moveLeftButton = document.createElement('button');
+                moveLeftButton.classList.add('move-left-button');
+                const currentDelete = clonedTask.querySelector('.delete-button')
+                currentDelete.before(moveLeftButton);
+                moveLeftButton.innerText = '<-'
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
                 task.remove();
@@ -28,13 +32,39 @@ function addEventListenersToTask(task) {
         if (doing.contains(task)) {
             clonedMoveRightButton.addEventListener('click', function() {
                 const clonedTask = task.cloneNode(true);
+                const currentRight = clonedTask.querySelector('.move-right-button');
+                currentRight.remove();
                 done.append(clonedTask);
                 addEventListenersToTask(clonedTask);
                 task.remove();
             })
         }
     }
-
+    if (clonedMoveLeftButton) {
+        if (doing.contains(task)) {
+            clonedMoveLeftButton.addEventListener('click', function() {
+                const clonedTask = task.cloneNode(true);
+                const currentLeft = clonedTask.querySelector('.move-left-button');
+                currentLeft.remove();
+                toDo.append(clonedTask);
+                addEventListenersToTask(clonedTask);
+                task.remove();
+            })
+        }
+        if (done.contains(task)) {
+            clonedMoveLeftButton.addEventListener('click', function() {
+                const clonedTask = task.cloneNode(true);
+                const moveRightButton = document.createElement('button');
+                moveRightButton.classList.add('move-right-button');
+                const currentDelete = clonedTask.querySelector('.delete-button')
+                currentDelete.after(moveRightButton);
+                moveRightButton.innerText = '->'
+                doing.append(clonedTask);
+                addEventListenersToTask(clonedTask);
+                task.remove();
+            })
+        }
+    }
 }
 
 if (taskName && addTaskButton) {
@@ -50,8 +80,7 @@ if (taskName && addTaskButton) {
         newTaskName.innerText = taskName.value;
         deleteButton.innerText = 'Delete';
         moveRightButton.innerText = '->';
-
-
+        
         toDo.append(newTask);
         addEventListenersToTask(newTask);
         taskName.value = '';
