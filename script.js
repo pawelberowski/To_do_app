@@ -70,7 +70,7 @@ function addEventListenersToTask(task) {
 if (taskName && addTaskButton) {
     addTaskButton.addEventListener('click', function(){
         const newTask = document.createElement('div');
-        const newTaskName = document.createElement('h2');
+        const newTaskName = document.createElement('h3');
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('delete-button');
         const moveRightButton = document.createElement('button');
