@@ -4,6 +4,22 @@ const toDo = document.querySelector('#to-do')
 const doing = document.querySelector('#doing')
 const done = document.querySelector('#done')
 
+function addMoveButton(button, task) {
+    const currentDelete = task.querySelector('.delete-button');
+
+    if (button === 'left') {
+        const moveLeftButton = document.createElement('button');
+        moveLeftButton.classList.add('move-left-button');
+        currentDelete.before(moveLeftButton);
+        moveLeftButton.innerText = '<-';
+    }
+    if (button === 'right') {
+        const moveRightButton = document.createElement('button');
+        moveRightButton.classList.add('move-right-button');
+        currentDelete.after(moveRightButton);
+        moveRightButton.innerText = '->';
+    }
+}
 function addEventListenersToTask(task) {
     const clonedDeleteButton = task.querySelector('.delete-button');
     const clonedMoveRightButton = task.querySelector('.move-right-button');
@@ -14,16 +30,11 @@ function addEventListenersToTask(task) {
             task.remove();
         })
     }
-
     if (clonedMoveRightButton) {
         if (toDo.contains(task)) {
             clonedMoveRightButton.addEventListener('click', function() {
                 const clonedTask = task.cloneNode(true);
-                const moveLeftButton = document.createElement('button');
-                moveLeftButton.classList.add('move-left-button');
-                const currentDelete = clonedTask.querySelector('.delete-button')
-                currentDelete.before(moveLeftButton);
-                moveLeftButton.innerText = '<-'
+                addMoveButton('left', clonedTask);
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
                 task.remove();
@@ -54,11 +65,7 @@ function addEventListenersToTask(task) {
         if (done.contains(task)) {
             clonedMoveLeftButton.addEventListener('click', function() {
                 const clonedTask = task.cloneNode(true);
-                const moveRightButton = document.createElement('button');
-                moveRightButton.classList.add('move-right-button');
-                const currentDelete = clonedTask.querySelector('.delete-button')
-                currentDelete.after(moveRightButton);
-                moveRightButton.innerText = '->'
+                addMoveButton('right', clonedTask);
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
                 task.remove();
@@ -66,9 +73,8 @@ function addEventListenersToTask(task) {
         }
     }
 }
-
 if (taskNameInput && addTaskButton) {
-    addTaskButton.addEventListener('click', function(){
+    addTaskButton.addEventListener('click', function() {
         if (!taskNameInput.value) {
             return;
         }
@@ -76,13 +82,10 @@ if (taskNameInput && addTaskButton) {
         const newTaskName = document.createElement('h3');
         const deleteButton = document.createElement('button');
         deleteButton.classList.add('delete-button');
-        const moveRightButton = document.createElement('button');
-        moveRightButton.classList.add('move-right-button');
-        newTask.append(newTaskName, deleteButton, moveRightButton);
+        newTask.append(newTaskName, deleteButton);
         newTaskName.innerText = taskNameInput.value;
         deleteButton.innerText = 'Delete';
-        moveRightButton.innerText = '->';
-
+        addMoveButton('right', newTask);
         toDo.append(newTask);
         addEventListenersToTask(newTask);
         taskNameInput.value = '';
