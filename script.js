@@ -20,6 +20,31 @@ function addMoveButton(buttonDirection, taskElement) {
         newMoveButton.innerText = '->';
     }
 }
+
+function attachListenersToMoveRightButton(task, clonedTask) {
+    const moveRightButton = task.querySelector('.move-right-button');
+    if (!moveRightButton) {
+        return;
+    }
+    if (toDo.contains(task)) {
+        moveRightButton.addEventListener('click', function() {
+            addMoveButton(leftButtonDirection, clonedTask);
+            doing.append(clonedTask);
+            addEventListenersToTask(clonedTask);
+            task.remove();
+        })
+    }
+    if (doing.contains(task)) {
+        moveRightButton.addEventListener('click', function() {
+            const currentRight = clonedTask.querySelector('.move-right-button');
+            currentRight.remove();
+            done.append(clonedTask);
+            addEventListenersToTask(clonedTask);
+            task.remove();
+        })
+    }
+}
+
 function addEventListenersToTask(task) {
     const clonedDeleteButton = task.querySelector('.delete-button');
     const clonedMoveRightButton = task.querySelector('.move-right-button');
@@ -31,25 +56,27 @@ function addEventListenersToTask(task) {
             task.remove();
         })
     }
-    if (clonedMoveRightButton) {
-        if (toDo.contains(task)) {
-            clonedMoveRightButton.addEventListener('click', function() {
-                addMoveButton(leftButtonDirection, clonedTask);
-                doing.append(clonedTask);
-                addEventListenersToTask(clonedTask);
-                task.remove();
-            })
-        }
-        if (doing.contains(task)) {
-            clonedMoveRightButton.addEventListener('click', function() {
-                const currentRight = clonedTask.querySelector('.move-right-button');
-                currentRight.remove();
-                done.append(clonedTask);
-                addEventListenersToTask(clonedTask);
-                task.remove();
-            })
-        }
-    }
+    attachListenersToMoveRightButton(task, clonedTask)
+    // if (clonedMoveRightButton) {
+    //     if (toDo.contains(task)) {
+    //         clonedMoveRightButton.addEventListener('click', function() {
+    //             addMoveButton(leftButtonDirection, clonedTask);
+    //             doing.append(clonedTask);
+    //             addEventListenersToTask(clonedTask);
+    //             task.remove();
+    //         })
+    //     }
+    //     if (doing.contains(task)) {
+    //         clonedMoveRightButton.addEventListener('click', function() {
+    //             const currentRight = clonedTask.querySelector('.move-right-button');
+    //             currentRight.remove();
+    //             done.append(clonedTask);
+    //             addEventListenersToTask(clonedTask);
+    //             task.remove();
+    //         })
+    //     }
+    //
+    // }
     if (clonedMoveLeftButton) {
         if (doing.contains(task)) {
             clonedMoveLeftButton.addEventListener('click', function() {
