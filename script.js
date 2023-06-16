@@ -20,14 +20,17 @@ function addMoveButton(buttonDirection, taskElement) {
         newMoveButton.innerText = '->';
     }
 }
-
-function attachListenersToMoveRightButton(task, clonedTask) {
-    const moveRightButton = task.querySelector('.move-right-button');
-    if (!moveRightButton) {
+function removeMoveButton(taskElement, buttonClass) {
+    const buttonToRemove = taskElement.querySelector(buttonClass);
+    buttonToRemove.remove();
+}
+function attachListenersToMoveButton(task, clonedTask, buttonClass) {
+    const moveButton = task.querySelector(buttonClass);
+    if (!moveButton) {
         return;
     }
     if (toDo.contains(task)) {
-        moveRightButton.addEventListener('click', function() {
+        moveButton.addEventListener('click', function() {
             addMoveButton(leftButtonDirection, clonedTask);
             doing.append(clonedTask);
             addEventListenersToTask(clonedTask);
@@ -35,31 +38,19 @@ function attachListenersToMoveRightButton(task, clonedTask) {
         })
     }
     if (doing.contains(task)) {
-        moveRightButton.addEventListener('click', function() {
-            const currentRight = clonedTask.querySelector('.move-right-button');
-            currentRight.remove();
-            done.append(clonedTask);
-            addEventListenersToTask(clonedTask);
-            task.remove();
-        })
-    }
-}
-function attachListenersToMoveLeftButton(task, clonedTask) {
-    const moveLeftButton = task.querySelector('.move-left-button');
-    if (!moveLeftButton) {
-        return;
-    }
-    if (doing.contains(task)) {
-        moveLeftButton.addEventListener('click', function() {
-            const currentLeft = clonedTask.querySelector('.move-left-button');
-            currentLeft.remove();
-            toDo.append(clonedTask);
+        moveButton.addEventListener('click', function() {
+            removeMoveButton(clonedTask, buttonClass)
+            if (buttonClass === '.move-right-button') {
+                done.append(clonedTask);
+            } else {
+                toDo.append(clonedTask);
+            }
             addEventListenersToTask(clonedTask);
             task.remove();
         })
     }
     if (done.contains(task)) {
-        moveLeftButton.addEventListener('click', function() {
+        moveButton.addEventListener('click', function() {
             addMoveButton(rightButtonDirection, clonedTask);
             doing.append(clonedTask);
             addEventListenersToTask(clonedTask);
@@ -76,8 +67,8 @@ function addEventListenersToTask(task) {
             task.remove();
         })
     }
-    attachListenersToMoveRightButton(task, clonedTask);
-    attachListenersToMoveLeftButton(task, clonedTask);
+    attachListenersToMoveButton(task, clonedTask, '.move-right-button');
+    attachListenersToMoveButton(task, clonedTask,'.move-left-button');
 }
 if (taskNameInput && addTaskButton) {
     addTaskButton.addEventListener('click', function() {
