@@ -6,18 +6,17 @@ const done = document.querySelector('#done')
 
 function addMoveButton(button, task) {
     const currentDelete = task.querySelector('.delete-button');
+    const newMoveButton = document.createElement('button');
 
     if (button === 'left') {
-        const moveLeftButton = document.createElement('button');
-        moveLeftButton.classList.add('move-left-button');
-        currentDelete.before(moveLeftButton);
-        moveLeftButton.innerText = '<-';
+        newMoveButton.classList.add('move-left-button');
+        currentDelete.before(newMoveButton);
+        newMoveButton.innerText = '<-';
     }
     if (button === 'right') {
-        const moveRightButton = document.createElement('button');
-        moveRightButton.classList.add('move-right-button');
-        currentDelete.after(moveRightButton);
-        moveRightButton.innerText = '->';
+        newMoveButton.classList.add('move-right-button');
+        currentDelete.after(newMoveButton);
+        newMoveButton.innerText = '->';
     }
 }
 function addEventListenersToTask(task) {
