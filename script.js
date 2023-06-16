@@ -23,6 +23,7 @@ function addEventListenersToTask(task) {
     const clonedDeleteButton = task.querySelector('.delete-button');
     const clonedMoveRightButton = task.querySelector('.move-right-button');
     const clonedMoveLeftButton = task.querySelector('.move-left-button');
+    const clonedTask = task.cloneNode(true);
 
     if (clonedDeleteButton) {
         clonedDeleteButton.addEventListener('click', function() {
@@ -32,7 +33,6 @@ function addEventListenersToTask(task) {
     if (clonedMoveRightButton) {
         if (toDo.contains(task)) {
             clonedMoveRightButton.addEventListener('click', function() {
-                const clonedTask = task.cloneNode(true);
                 addMoveButton('left', clonedTask);
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
@@ -41,7 +41,6 @@ function addEventListenersToTask(task) {
         }
         if (doing.contains(task)) {
             clonedMoveRightButton.addEventListener('click', function() {
-                const clonedTask = task.cloneNode(true);
                 const currentRight = clonedTask.querySelector('.move-right-button');
                 currentRight.remove();
                 done.append(clonedTask);
@@ -53,7 +52,6 @@ function addEventListenersToTask(task) {
     if (clonedMoveLeftButton) {
         if (doing.contains(task)) {
             clonedMoveLeftButton.addEventListener('click', function() {
-                const clonedTask = task.cloneNode(true);
                 const currentLeft = clonedTask.querySelector('.move-left-button');
                 currentLeft.remove();
                 toDo.append(clonedTask);
@@ -63,7 +61,6 @@ function addEventListenersToTask(task) {
         }
         if (done.contains(task)) {
             clonedMoveLeftButton.addEventListener('click', function() {
-                const clonedTask = task.cloneNode(true);
                 addMoveButton('right', clonedTask);
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
