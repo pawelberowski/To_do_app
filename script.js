@@ -1,21 +1,22 @@
 const taskNameInput = document.querySelector('#task-name');
 const addTaskButton = document.querySelector('#add-task-button');
-const toDo = document.querySelector('#to-do')
-const doing = document.querySelector('#doing')
-const done = document.querySelector('#done')
-
-function addMoveButton(button, task) {
-    const currentDelete = task.querySelector('.delete-button');
+const toDo = document.querySelector('#to-do');
+const doing = document.querySelector('#doing');
+const done = document.querySelector('#done');
+const leftButtonDirection = 'left';
+const rightButtonDirection = 'right';
+function addMoveButton(buttonDirection, taskElement) {
+    const deleteButton = taskElement.querySelector('.delete-button');
     const newMoveButton = document.createElement('button');
 
-    if (button === 'left') {
+    if (buttonDirection === leftButtonDirection) {
         newMoveButton.classList.add('move-left-button');
-        currentDelete.before(newMoveButton);
+        deleteButton.before(newMoveButton);
         newMoveButton.innerText = '<-';
     }
-    if (button === 'right') {
+    if (buttonDirection === rightButtonDirection) {
         newMoveButton.classList.add('move-right-button');
-        currentDelete.after(newMoveButton);
+        deleteButton.after(newMoveButton);
         newMoveButton.innerText = '->';
     }
 }
@@ -33,7 +34,7 @@ function addEventListenersToTask(task) {
     if (clonedMoveRightButton) {
         if (toDo.contains(task)) {
             clonedMoveRightButton.addEventListener('click', function() {
-                addMoveButton('left', clonedTask);
+                addMoveButton(leftButtonDirection, clonedTask);
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
                 task.remove();
@@ -61,7 +62,7 @@ function addEventListenersToTask(task) {
         }
         if (done.contains(task)) {
             clonedMoveLeftButton.addEventListener('click', function() {
-                addMoveButton('right', clonedTask);
+                addMoveButton(rightButtonDirection, clonedTask);
                 doing.append(clonedTask);
                 addEventListenersToTask(clonedTask);
                 task.remove();
@@ -81,7 +82,7 @@ if (taskNameInput && addTaskButton) {
         newTask.append(newTaskName, deleteButton);
         newTaskName.innerText = taskNameInput.value;
         deleteButton.innerText = 'Delete';
-        addMoveButton('right', newTask);
+        addMoveButton(rightButtonDirection, newTask);
         toDo.append(newTask);
         addEventListenersToTask(newTask);
         taskNameInput.value = '';
