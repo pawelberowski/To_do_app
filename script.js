@@ -1,3 +1,5 @@
+import './styles.css'
+
 const taskNameInput = document.querySelector('#task-name');
 const addTaskButton = document.querySelector('#add-task-button');
 const toDo = document.querySelector('#to-do');
