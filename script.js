@@ -1,5 +1,6 @@
 import './styles.css'
 import { leftButtonDirection, rightButtonDirection, addMoveButton } from "./add_move_button";
+import { removeMoveButton } from "./remove_move_button";
 
 const taskNameInput = document.querySelector('#task-name');
 const addTaskButton = document.querySelector('#add-task-button');
@@ -7,10 +8,6 @@ const toDo = document.querySelector('#to-do');
 const doing = document.querySelector('#doing');
 const done = document.querySelector('#done');
 
-function removeMoveButton(taskElement, buttonClass) {
-    const buttonToRemove = taskElement.querySelector(buttonClass);
-    buttonToRemove.remove();
-}
 function attachListenersToMoveButton(task, clonedTask, buttonClass) {
     const moveButton = task.querySelector(buttonClass);
     if (!moveButton) {
