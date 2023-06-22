@@ -1,27 +1,12 @@
 import './styles.css'
+import { leftButtonDirection, rightButtonDirection, addMoveButton } from "./add_move_button";
 
 const taskNameInput = document.querySelector('#task-name');
 const addTaskButton = document.querySelector('#add-task-button');
 const toDo = document.querySelector('#to-do');
 const doing = document.querySelector('#doing');
 const done = document.querySelector('#done');
-const leftButtonDirection = 'left';
-const rightButtonDirection = 'right';
-function addMoveButton(buttonDirection, taskElement) {
-    const deleteButton = taskElement.querySelector('.delete-button');
-    const newMoveButton = document.createElement('button');
 
-    if (buttonDirection === leftButtonDirection) {
-        newMoveButton.classList.add('move-left-button');
-        deleteButton.before(newMoveButton);
-        newMoveButton.innerText = '<-';
-    }
-    if (buttonDirection === rightButtonDirection) {
-        newMoveButton.classList.add('move-right-button');
-        deleteButton.after(newMoveButton);
-        newMoveButton.innerText = '->';
-    }
-}
 function removeMoveButton(taskElement, buttonClass) {
     const buttonToRemove = taskElement.querySelector(buttonClass);
     buttonToRemove.remove();
