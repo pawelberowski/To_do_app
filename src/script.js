@@ -1,15 +1,6 @@
 import './styles.css';
-import {
-  leftButtonDirection,
-  rightButtonDirection,
-  addMoveButton,
-} from './add_move_button';
-import {
-  toDo,
-  doing,
-  done,
-  attachListenersToMoveButton,
-} from './attach_listeners_to_move_button';
+import { rightButtonDirection, addMoveButton } from './add_move_button';
+import { toDo } from './attach_listeners_to_move_button';
 import { addEventListenersToTask } from './add_event_listeners_to_task';
 
 const taskNameInput = document.querySelector('#task-name');
