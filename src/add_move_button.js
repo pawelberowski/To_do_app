@@ -16,4 +16,4 @@ function addMoveButton(buttonDirection, taskElement) {
   }
 }
 
-export { leftButtonDirection, rightButtonDirection, addMoveButton};
+export { leftButtonDirection, rightButtonDirection, addMoveButton };
